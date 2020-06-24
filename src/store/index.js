@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
-import storage from './modules/storage';
+import storage from './modules/sub';
 import moment from 'moment';
 
 Vue.use(Vuex);
