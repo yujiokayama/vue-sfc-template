@@ -5,13 +5,16 @@
   "license": "MIT",
   "scripts": {
     "build": "webpack",
-    "watch": "webpack --watch"
+    "watch": "webpack --watch",
+    "lint": "eslint src --ext .ts"
   },
   "devDependencies": {
     "@babel/core": "^7.10.2",
     "@babel/preset-env": "^7.10.2",
     "babel-loader": "^8.1.0",
     "css-loader": "^3.5.3",
+    "eslint-plugin-prettier": "^3.1.4",
+    "prettier": "^2.0.5",
     "vue": "^2.6.11",
     "vue-loader": "^15.9.2",
     "vue-style-loader": "^4.1.2",
