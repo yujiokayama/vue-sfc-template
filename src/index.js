@@ -5,7 +5,7 @@ import App from './components/App';
 import store from './store';
 
 new Vue({
-  el: '#App',
+  el: '#XHM_APP',
   store,
   render: (h) => h(App)
 });

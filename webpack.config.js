@@ -1,16 +1,25 @@
-const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 // development に設定するとソースマップ有効でJSファイルが出力される
-const MODE = 'development';
+const MODE = 'development'
 // ソースマップの利用有無(productionのときはソースマップを利用しない)
-const enabledSourceMap = MODE === 'development';
+const enabledSourceMap = MODE === 'development'
+// ファイル出力時の絶対パス指定に使用
+const path = require('path');
 
 module.exports = {
   mode: MODE,
+  // ファイルの出力設定
+  output: {
+    // 出力先(絶対パスでの指定必須)
+    path: `${__dirname}/../server/assets/js`,
+    // 出力ファイル名
+    filename: 'xhm_form.js',
+  },
   module: {
     rules: [
       {
         test: /\.vue$/,
-        loader: 'vue-loader'
+        loader: 'vue-loader',
       },
       {
         test: /\.m?js$/,
@@ -23,16 +32,16 @@ module.exports = {
                 '@babel/preset-env',
                 {
                   useBuiltIns: 'usage',
-                  corejs: 3
-                }
-              ]
-            ]
-          }
-        }
+                  corejs: 3,
+                },
+              ],
+            ],
+          },
+        },
       },
       {
         test: /\.css$/,
-        use: ['vue-style-loader', 'css-loader']
+        use: ['vue-style-loader', 'css-loader'],
       },
       // Sassファイルの読み込みとコンパイル
       {
@@ -51,37 +60,37 @@ module.exports = {
               // 0 => no loaders (default);
               // 1 => postcss-loader;
               // 2 => postcss-loader, sass-loader
-              importLoaders: 2
-            }
+              importLoaders: 2,
+            },
           },
           {
             loader: 'sass-loader',
             options: {
               // ソースマップの利用有無
-              sourceMap: enabledSourceMap
-            }
-          }
-        ]
+              sourceMap: enabledSourceMap,
+            },
+          },
+        ],
       },
       {
         // 対象となるファイルの拡張子
         test: /\.(gif|png|jpg|eot|wof|woff|woff2|ttf|svg)$/,
         // 画像をBase64として取り込む
         loader: 'url-loader',
-        options: { esModule: false }
-      }
-    ]
+        options: { esModule: false },
+      },
+    ],
   },
   // import 文で .ts ファイルを解決するため
   resolve: {
     // Webpackで利用するときの設定
     alias: {
-      vue$: 'vue/dist/vue.esm.js'
+      vue$: 'vue/dist/vue.esm.js',
     },
-    extensions: ['*', '.js', '.vue', '.json']
+    extensions: ['*', '.js', '.vue', '.json'],
   },
   plugins: [
     // Vueを読み込めるようにするため
-    new VueLoaderPlugin()
-  ]
-};
+    new VueLoaderPlugin(),
+  ],
+}
