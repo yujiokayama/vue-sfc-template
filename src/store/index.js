@@ -10,7 +10,7 @@ export default new Vuex.Store({
   state: {
     formDestory: false,
     storage: {
-      formID: 0,
+      formID: null,
       display: false,
       userAgent: null,
       reference: null,
@@ -48,33 +48,55 @@ export default new Vuex.Store({
   actions: {
     setFormScript({ state, commit, getters, dispatch }, payload) {
       const storage = state.storage
-      if (!storage.updateDisplay) {
+      if (!storage.display) {
         /**
          * patternA
          */
-        if (storage.visited.match('index') && storage.circulation >= 3) {
-          commit('updateDisplay', true)
+        if (storage.visited.match(/index/) && storage.circulation >= 3) {
           commit('updateFormID', 93)
-        } else if (storage.visited.match('index') && storage.circulation >= 5) {
+          commit('updateDisplay', true)
+          dispatch('setFormTag')
+        } else if (storage.visited.match(/index/) && storage.circulation >= 5) {
           /**
            * patternB
            */
-          commit('updateDisplay', true)
           commit('updateFormID', 94)
+          commit('updateDisplay', true)
+          dispatch('setFormTag')
         } else if (storage.useNavigation && storage.circulation >= 5) {
           /**
            * patternC
            */
           commit('updateDisplay', true)
           commit('updateFormID', 100)
+          dispatch('setFormTag')
+        } else if (
+          storage.visited.match(
+            /target|commerce|logstorage|others|function-list|ma-planning/
+          )
+        ) {
+          /**
+           * patternD
+           */
+          commit('updateDisplay', true)
+          commit('updateFormID', 101)
+          dispatch('setFormTag')
+        } else if (storage.visited.match(/faq/)) {
+          /**
+           * patternE
+           */
+          commit('updateDisplay', true)
+          commit('updateFormID', 102)
+          dispatch('setFormTag')
         }
       }
-
+    },
+    setFormTag({ state }) {
+      const storage = state.storage
       const script = document.createElement('script')
       script.src = `https://form.xdata.jp/form.js?site_id=500507&form_id=${storage.formID}`
       document.body.appendChild(script)
     },
-
     setUserAgent({ state, commit, getters, dispatch }, payload) {
       const userAgent = `${
         window.navigator.userAgent.match(/iPhone|Android.+Mobile/) ? 'sp' : 'pc'

@@ -1,5 +1,8 @@
 <template>
-  <div v-if="storage.display" class="form">
+  <div
+    v-if="storage.display && JSON.parse(storage.userAgent) === 'pc'"
+    class="form"
+  >
     <div class="form__container">
       <div class="form__inner">
         <button @click="formDelete" class="form__btn--close">✕</button>
@@ -9,6 +12,12 @@
         </section>
       </div>
     </div>
+  </div>
+  <div
+    v-else-if="storage.display && JSON.parse(storage.userAgent) === 'sp'"
+    class="form"
+  >
+    <div id="xhm-form"></div>
   </div>
 </template>
 
